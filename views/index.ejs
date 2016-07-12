@@ -1,0 +1,38 @@
+<html>
+<head>
+<title></title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document).ready(function (){
+            var socket = io.connect();
+            //window.setInterval(function(){
+            //    socket.emit("button_clicked", {reason: "because I want to learn about sockets!"});
+            //},900);
+            var points =  $("#svgPoly").attr("points")
+	    var x = 0, y = 0;
+	    socket.on('server_response', function (data){
+                message = data.response.split(" ");
+		console.log(message[43]);
+		//document.getElementById("cpu").innerHTML=data.response;
+		$("#svgPoly").attr("points",$("#svgPoly").attr("points")+" "+x+","+(100-parseFloat(message[43])));
+		x+=2;
+		//console.log($("#svgPoly").attr("points"))
+            });
+        })
+    </script>
+</head>
+<body>
+    <p id="cpu"></p>
+    <svg viewBox="0 0 500 100" class="chart" style="border:1px solid black">
+     <polyline 
+     id="svgPoly" 
+     fill="none"
+     stroke="#0074d9"
+     stroke-width="2"
+     points="
+       0,100"/>
+    </svg>
+</body>
+</html><br>
